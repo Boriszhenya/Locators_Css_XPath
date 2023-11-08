@@ -25,14 +25,14 @@ public class LocatorsTest {
         WebDriverManager.chromedriver().setup();
 
         ChromeOptions options = new ChromeOptions();
-        Map<String, Object> prefs = new HashMap<String, Object>();
-        Map<String, Object> profile = new HashMap<String, Object>();
-        Map<String, Object> contentSettings = new HashMap<String, Object>();
+        Map<String, Object> prefs = new HashMap<>();
+        Map<String, Object> profile = new HashMap<>();
+        Map<String, Object> contentSettings = new HashMap<>();
 
         //contentSettings.put("cookies",2);
-        profile.put("managed_default_content_settings",contentSettings);
-        prefs.put("profile",profile);
-        options.setExperimentalOption("prefs",prefs);
+        profile.put("managed_default_content_settings", contentSettings);
+        prefs.put("profile", profile);
+        options.setExperimentalOption("prefs", prefs);
 
         // Создаём новый объект класса ChromeDriver
         driver = new ChromeDriver(options);
@@ -53,31 +53,31 @@ public class LocatorsTest {
 
     @Test
     public void testCssLocators() {
-        WebElement userNameInput = driver.findElement(By.cssSelector(""));
+        WebElement userNameInput = driver.findElement(By.cssSelector("[placeholder='Username']"));
         userNameInput.sendKeys("standard_user");
 
-        WebElement passwordInput = driver.findElement(By.cssSelector(""));
+        WebElement passwordInput = driver.findElement(By.cssSelector("[placeholder='Password']"));
         passwordInput.sendKeys("secret_sauce");
 
-        WebElement loginButton = driver.findElement(By.cssSelector(""));
+        WebElement loginButton = driver.findElement(By.cssSelector("#login-button"));
         loginButton.click();
 
-        WebElement tShirtAddToCartButton = driver.findElement(By.cssSelector(""));
+        WebElement tShirtAddToCartButton = driver.findElement(By.cssSelector("#add-to-cart-sauce-labs-bolt-t-shirt"));
         tShirtAddToCartButton.click();
 
-        WebElement bikeLightPageLink = driver.findElement(By.cssSelector(""));
+        WebElement bikeLightPageLink = driver.findElement(By.cssSelector("#item_0_img_link"));
         bikeLightPageLink.click();
 
-        WebElement bikeLightAddToCartButton = driver.findElement(By.cssSelector(""));
+        WebElement bikeLightAddToCartButton = driver.findElement(By.cssSelector("#add-to-cart-sauce-labs-bike-light"));
         bikeLightAddToCartButton.click();
 
-        WebElement cartLink = driver.findElement(By.cssSelector(""));
+        WebElement cartLink = driver.findElement(By.cssSelector("#shopping_cart_container"));
         cartLink.click();
 
         assertEquals("Sauce Labs Bolt T-Shirt", driver.findElements(By.className("inventory_item_name")).get(0).getText());
         assertEquals("Sauce Labs Bike Light", driver.findElements(By.className("inventory_item_name")).get(1).getText());
 
-        WebElement checkoutButton = driver.findElement(By.cssSelector(""));
+        WebElement checkoutButton = driver.findElement(By.cssSelector("#checkout"));
         checkoutButton.click();
 
         assertEquals("First Name", driver.findElement(By.name("firstName")).getAttribute("placeholder"));
@@ -87,31 +87,31 @@ public class LocatorsTest {
 
     @Test
     public void testXpathLocators() {
-        WebElement userNameInput = driver.findElement(By.xpath(""));
+        WebElement userNameInput = driver.findElement(By.xpath("//input[@id='user-name']"));
         userNameInput.sendKeys("standard_user");
 
-        WebElement passwordInput = driver.findElement(By.xpath(""));
+        WebElement passwordInput = driver.findElement(By.xpath("//input[@id='password']"));
         passwordInput.sendKeys("secret_sauce");
 
-        WebElement loginButton = driver.findElement(By.xpath(""));
+        WebElement loginButton = driver.findElement(By.xpath("//input[@id='login-button']"));
         loginButton.click();
 
-        WebElement tShirtAddToCartButton = driver.findElement(By.xpath(""));
+        WebElement tShirtAddToCartButton = driver.findElement(By.xpath("//button[@id='add-to-cart-sauce-labs-bolt-t-shirt']"));
         tShirtAddToCartButton.click();
 
-        WebElement bikeLightPageLink = driver.findElement(By.xpath(""));
+        WebElement bikeLightPageLink = driver.findElement(By.xpath("//a[@id='item_0_img_link']"));
         bikeLightPageLink.click();
 
-        WebElement bikeLightAddToCartButton = driver.findElement(By.xpath(""));
+        WebElement bikeLightAddToCartButton = driver.findElement(By.xpath("//button[@id='add-to-cart-sauce-labs-bike-light']"));
         bikeLightAddToCartButton.click();
 
-        WebElement cartLink = driver.findElement(By.xpath(""));
+        WebElement cartLink = driver.findElement(By.xpath("//a[@class='shopping_cart_link']"));
         cartLink.click();
 
         assertEquals("Sauce Labs Bolt T-Shirt", driver.findElements(By.className("inventory_item_name")).get(0).getText());
         assertEquals("Sauce Labs Bike Light", driver.findElements(By.className("inventory_item_name")).get(1).getText());
 
-        WebElement checkoutButton = driver.findElement(By.xpath(""));
+        WebElement checkoutButton = driver.findElement(By.xpath("//button[@id='checkout']"));
         checkoutButton.click();
 
         assertEquals("First Name", driver.findElement(By.name("firstName")).getAttribute("placeholder"));
