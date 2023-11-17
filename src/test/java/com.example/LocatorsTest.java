@@ -74,6 +74,7 @@ public class LocatorsTest {
         WebElement cartLink = driver.findElement(By.cssSelector("#shopping_cart_container"));
         cartLink.click();
 
+
         assertEquals("Sauce Labs Bolt T-Shirt", driver.findElements(By.className("inventory_item_name")).get(0).getText());
         assertEquals("Sauce Labs Bike Light", driver.findElements(By.className("inventory_item_name")).get(1).getText());
 
