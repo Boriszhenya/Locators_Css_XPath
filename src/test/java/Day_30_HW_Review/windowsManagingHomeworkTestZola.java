@@ -7,64 +7,75 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.openqa.selenium.support.ui.ExpectedConditions.*;
+import static org.openqa.selenium.By.tagName;
 
-public class WindowsManagingHomeworkTest extends BaseTest {
+public class windowsManagingHomeworkTestZola extends BaseTest {
     @Test
     public void fourWindowsTest() {
         driver.get("https://selectorshub.com/xpath-practice-page/");
-        String handleMein = driver.getWindowHandle();
         WebElement checkoutHereHover = driver.findElement(By.xpath("//div[@class='dropdown']/button"));
+        String defaultWindow = driver.getWindowHandle();
         actions.moveToElement(checkoutHereHover).perform();
 
-        wait.until(numberOfElementsToBe(By.cssSelector(".dropdown > .dropdown-content > a"),3));
-
         driver.findElement(By.linkText("Join Training")).click();
-        driver.findElement(By.linkText("Try TestCase Studio")).click();
-        driver.findElement(By.linkText("Consider a small Donation and support this page.")).click();
-        wait.until(numberOfWindowsToBe(4));
+        wait.until(ExpectedConditions.numberOfWindowsToBe(2));
+        for (String windowHandle : driver.getWindowHandles()) {
+            driver.switchTo().window(windowHandle);
+        }
+        String windowHandleTraining = driver.getWindowHandle();
 
+        driver.switchTo().window(defaultWindow);
+        actions.moveToElement(checkoutHereHover).perform();
+        driver.findElement(By.linkText("Try TestCase Studio")).click();
+        wait.until(ExpectedConditions.numberOfWindowsToBe(3));
+        for (String windowHandle : driver.getWindowHandles()) {
+            driver.switchTo().window(windowHandle);
+        }
+        String windowHandleTestCase = driver.getWindowHandle();
+
+        driver.switchTo().window(defaultWindow);
+        actions.moveToElement(checkoutHereHover).perform();
+        driver.findElement(By.linkText("Consider a small Donation and support this page.")).click();
+        wait.until(ExpectedConditions.numberOfWindowsToBe(4));
+        for (String windowHandle : driver.getWindowHandles()) {
+            driver.switchTo().window(windowHandle);
+        }
+        String windowHandleDonation = driver.getWindowHandle();
 
         //Не меняйте порядок ассертов!
         //Перейдите обратно на окно изначальной страницы, чтобы ассерт ниже прошёл
-
-        driver.switchTo().window(handleMein);
+        driver.switchTo().window(defaultWindow);
         assertEquals("Click here to practice iframe and nested iframe scenarios.", driver.findElement(By.xpath("//h4[.='Memory Test']/..//a")).getText());
 
         //Перейдите на окно открытое по ссылке Join Training, чтобы ассерт ниже прошёл
-        goToWindowByTitle("Bootcamp - SelectorsHub");
-        assertEquals("SelectorsHub Technical Boot Camp", driver.findElement(By.tagName("h2")).getText());
+        driver.switchTo().window(windowHandleTraining);
+        assertEquals("SelectorsHub Technical Boot Camp", driver.findElement(tagName("h2")).getText());
 
-        //Перейдите на окно открытое по ссылке Donate, чтобы ассерт ниже прошёл Donate - SelectorsHub
-        goToWindowByTitle("Donate - SelectorsHub");
+        //Перейдите на окно открытое по ссылке Donate, чтобы ассерт ниже прошёл
+        driver.switchTo().window(windowHandleDonation);
         assertEquals("Click to be a Patron", driver.findElements(By.cssSelector(".elementor-button-text")).get(4).getText());
 
         //Перейдите на окно открытое по ссылке Try TestCase Studio, чтобы ассерт ниже прошёл
-        goToWindowByTitle("SelectorsHub- Free Productivity Booster Tools For Testers");
+        driver.switchTo().window(windowHandleTestCase);
         assertEquals("Try our FREE recorder plugin 'TestCase Studio' to auto generate test steps & Screenshot", driver.findElement(By.xpath("//span[.='Try Now']/../../../../../..//h2")).getText());
 
         //Теперь проверяем что окон четыре
         assertEquals(4, driver.getWindowHandles().size());
 
         //Теперь закройте все окна кроме изначального, чтобы ассерты ниже прошли
-        for (String p : driver.getWindowHandles()) {
-            if (!p.equals(handleMein)) {
-                driver.switchTo().window(p).close();
+        for (String windowHandle : driver.getWindowHandles()) {
+            if (!windowHandle.equals(defaultWindow)) {
+                driver.switchTo().window(windowHandle);
+                driver.close();
             }
         }
-        driver.switchTo().window(handleMein);
         assertEquals(1, driver.getWindowHandles().size());
-        assertEquals("Xpath Practice Page | Shadow dom, nested shadow dom, iframe, nested iframe and more complex automation scenarios.", driver.getTitle());
 
+        driver.switchTo().window(defaultWindow);
+        assertEquals(
+                "Xpath Practice Page | Shadow dom, nested shadow dom, iframe, nested iframe and more complex automation scenarios.",
+                driver.getTitle()
+        );
         //Запустите тест несколько раз (хотя бы 3) чтобы убедиться, что всё точно сделано правильно ;)
     }
-
-    void goToWindowByTitle(String link) {
-        for (String p : driver.getWindowHandles()) {
-            if (driver.switchTo().window(p).getTitle().equals(link)) {
-                break;
-            }
-        }
-    }
-
 }
