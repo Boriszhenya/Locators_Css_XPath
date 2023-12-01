@@ -84,9 +84,9 @@ public class WebElementExtraLessonTest extends BaseTest {
         driver.get("https://demo.aspnetawesome.com/GridFilterRowServerSideData#Grid-filter-row-server-data");
         WebElement foodButton = driver.findElement(By.cssSelector("#GridFrow2fltFood-awed > div.o-cptn"));
         foodButton.click();
-        WebElement foodSearchInput = driver.findElement(By.xpath("//*[@id='GridFrow2fltFood-dropmenu']/div[1]/input"));
-        foodSearchInput.click();
-        foodSearchInput.sendKeys("Pizza", Keys.ENTER);
+//        WebElement foodSearchInput = driver.findElement(By.xpath("//*[@id='GridFrow2fltFood-dropmenu']/div[1]/input"));
+//        foodSearchInput.click();
+//        foodSearchInput.sendKeys("Pizza", Keys.ENTER);
 
         WebElement dateSearch = driver.findElement(By.xpath("//input[@id='GridFrow2fltDate']"));
         dateSearch.click();

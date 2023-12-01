@@ -1,4 +1,4 @@
-package com.example;
+package Day_28;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.jupiter.api.AfterEach;
@@ -39,7 +39,7 @@ public class BaseTest {
         // Создаём новый объект класса ChromeDriver
         driver = new ChromeDriver(options);
         //driver.manage().timeouts().implicitlyWait(Duration.ofMillis(10000));
-        wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        wait = new WebDriverWait(driver, Duration.ofSeconds(15));
         actions = new Actions(driver);
         js = (JavascriptExecutor) driver;
         try {
